@@ -119,8 +119,15 @@ macx{
     }
 
     win32{
-        LIBS += $$PWD/Steamworks_142/sdk/redistributable_bin/steam_api.lib
-        INCLUDEPATH += $$PWD/Steamworks_142/sdk/public/
+        STEAMWORKS_SDK = $$(STEAMWORKS_SDK)
+        isEmpty(STEAMWORKS_SDK): STEAMWORKS_SDK = $$PWD/Steamworks_142/sdk
+
+        contains(QT_ARCH, x86_64) {
+            LIBS += $$STEAMWORKS_SDK/redistributable_bin/win64/steam_api64.lib
+        } else {
+            LIBS += $$STEAMWORKS_SDK/redistributable_bin/steam_api.lib
+        }
+        INCLUDEPATH += $$STEAMWORKS_SDK/public/
     }
 
 }
